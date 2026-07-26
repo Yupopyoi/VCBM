@@ -1,0 +1,167 @@
+# ============================================================
+# Unity 6.5 project
+# Place this file at the Unity project root as ".gitignore".
+#
+# Keep these directories under Git:
+#   Assets/
+#   Packages/
+#   ProjectSettings/
+#
+# Do not ignore .meta files. Unity requires them.
+# ============================================================
+
+# --- Unity generated directories ---
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+/[Aa]rtifacts/
+/[Ee]xported[Oo]bj/
+
+# --- Builds ---
+/[Bb]uild/
+/[Bb]uilds/
+
+# --- Unity generated files ---
+*.pidb
+*.booproj
+*.svd
+*.pdb
+*.mdb
+*.opendb
+*.VC.db
+*.VC.VC.opendb
+*.csproj
+*.unityproj
+*.sln
+*.suo
+*.tmp
+*.user
+*.userprefs
+*.pidb.meta
+*.pdb.meta
+*.mdb.meta
+
+# Unity crash and diagnostic files
+sysinfo.txt
+*.stacktrace
+crashlytics-build.properties
+
+# Asset Store Tools
+/[Aa]ssets/[Aa]sset[Ss]tore[Tt]ools*
+
+# Addressables generated build data
+/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/[Aa]ssets/[Ss]treamingAssets/aa.meta
+/[Aa]ssets/[Ss]treamingAssets/aa/
+
+# --- Visual Studio / Rider / JetBrains ---
+.vs/
+.idea/
+*.sln.iml
+_ReSharper*/
+*.DotSettings.user
+
+# --- VS Code local settings ---
+.vscode/
+
+# --- Operating system files ---
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# --- Windows installer / package output ---
+*.msi
+*.msix
+*.appx
+*.appxbundle
+
+# --- Python environments and caches ---
+.venv/
+**/.venv/
+venv/
+**/venv/
+.python/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+
+# Python/package manager caches
+.pip-cache/
+.uv-cache/
+.cache/
+.torch/
+**/.torch/
+huggingface/
+**/huggingface/
+
+# --- Local services and generated runtime files ---
+logs/
+Logs/
+downloads/
+Downloads/
+GeneratedVoices/
+VoiceProfiles/
+UserData/
+RuntimeData/
+
+# --- Downloaded model/checkpoint directories ---
+checkpoints/
+checkpoints_*/
+Checkpoints/
+ModelCache/
+LocalModels/
+ExternalModels/
+
+# --- Local configuration and secrets ---
+.env
+.env.*
+!.env.example
+*.local.json
+secrets.json
+appsettings.Local.json
+
+# --- Audio temporary and generated files ---
+*.tmp.wav
+*.preview.wav
+*.converted.wav
+recordings/
+Recordings/
+
+# --- Native build output for C++ plugins ---
+[Bb]in/
+x64/
+x86/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+compile_commands.json
+
+# Keep source plugin files, but ignore generated native binaries outside Assets/Plugins.
+*.ilk
+*.exp
+*.lib
+*.obj
+
+# --- Test and coverage output ---
+TestResults/
+coverage/
+.coverage
+coverage.xml
+
+# --- Package archives ---
+*.zip
+*.7z
+*.rar
