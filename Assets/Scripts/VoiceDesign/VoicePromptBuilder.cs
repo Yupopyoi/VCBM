@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using static UnityEngine.Rendering.DebugUI;
 
 namespace VCBM.VoiceDesign
 {
@@ -45,9 +46,19 @@ namespace VCBM.VoiceDesign
 
         private static string BuildSpeaker(float value)
         {
+            if (value == 0.00f)
+            {
+                return "";
+            }
+
+            if (value >= 0.90f)
+            {
+                return "A youthful Japanese girl speaking casually in a relaxed everyday conversation. Her voice is squeaky cartoon-character voice";
+            }
+
             if (value >= 0.80f)
             {
-                return "A youthful Japanese young woman speaking casually in a relaxed everyday conversation.";
+                return "A youthful Japanese girl speaking casually in a relaxed everyday conversation.";
             }
 
             if (value >= 0.40f)
@@ -60,6 +71,16 @@ namespace VCBM.VoiceDesign
 
         private static string BuildPitch(float value)
         {
+            if (value == 0.00f)
+            {
+                return "";
+            }
+
+            if (value >= 0.92f)
+            {
+                return "Her voice is clearly in the high register, with a light, youthful tone that gives the impression of being childlike.";
+            }
+
             if (value >= 0.82f)
             {
                 return "Her voice has a distinctly high, light and youthful register that remains comfortable and effortless.";
@@ -81,6 +102,11 @@ namespace VCBM.VoiceDesign
         private static string BuildTone(float brightness, float softness)
         {
             string tone;
+
+            if (brightness == 0.00f && softness == 0.00f)
+            {
+                return "";
+            }
 
             if (brightness >= 0.68f)
             {
@@ -110,6 +136,11 @@ namespace VCBM.VoiceDesign
 
         private static string BuildBreathiness(float value)
         {
+            if (value == 0.00f)
+            {
+                return "";
+            }
+
             if (value >= 0.72f)
             {
                 return "A slight airy quality adds softness while the speech remains clear and intelligible.";
@@ -126,6 +157,11 @@ namespace VCBM.VoiceDesign
         private static string BuildCharacter(float cuteness, float energy)
         {
             string character;
+
+            if (cuteness == 0.00f && energy == 0.00f)
+            {
+                return "";
+            }
 
             if (cuteness >= 0.78f)
             {
@@ -155,6 +191,11 @@ namespace VCBM.VoiceDesign
 
         private static string BuildIntonation(float value)
         {
+            if (value == 0.00f)
+            {
+                return "";
+            }
+
             if (value >= 0.72f)
             {
                 return "She uses lively but natural variations in rhythm and intonation.";
@@ -170,6 +211,11 @@ namespace VCBM.VoiceDesign
 
         private static string BuildSpeed(float value)
         {
+            if (value == 0.00f)
+            {
+                return "";
+            }
+
             if (value >= 0.72f)
             {
                 return "She speaks at a slightly quick but comfortable conversational pace.";
@@ -185,6 +231,11 @@ namespace VCBM.VoiceDesign
 
         private static string BuildNaturalness(float value)
         {
+            if (value == 0.00f)
+            {
+                return "";
+            }
+
             if (value >= 0.82f)
             {
                 return "The performance is realistic, human and conversational, without forced pitch, exaggerated acting, squeaking or cartoon-like delivery.";

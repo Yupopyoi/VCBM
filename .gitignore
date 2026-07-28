@@ -165,3 +165,6 @@ coverage.xml
 *.zip
 *.7z
 *.rar
+
+# --- External repositories and AI models ---
+/Tools/VoxCPM/
