@@ -37,16 +37,25 @@ UnityからHTTP APIを通じて音声生成の要求や生成結果の取得を�
 
 ## 環境構築
 
+## 本Unityプロジェクトのクローン
+
+任意のディレクトリで作業を行います。
+
+```bash git clone
+git clone https://github.com/Yupopyoi/VCBM.git
+```
+
 ### [VoxCPM](https://github.com/OpenBMB/VoxCPM/)のクローン
 
 **Toolsディレクトリ内（VCBM\Tools\）** で作業を行います。
 
 > [!NOTE]
-> Toolsディレクトリ以外でgit cloneした場合、VocCPMのリポジトリがgitignoreされません！
+> Toolsディレクトリでgit cloneした場合、VocCPMのリポジトリがgitignoreされます。
 
 下記のコマンドを実行し、VocCPMのリポジトリをクローンします。
 
 ```bash:git clone
+cd VCBM/Tools
 git clone https://github.com/OpenBMB/VoxCPM.git VoxCPM
 ```
 
@@ -67,7 +76,7 @@ py -3.12 -m venv .venv
 .\.venv\Scripts\Activate.ps1
 ```
 
-続いて、必要なPythonツールを更新します。
+(.venv)が表示されたら、必要なPythonツールを更新します。
 
 ```bash:install
 python -m pip install --upgrade pip setuptools wheel `
@@ -92,17 +101,17 @@ python -c "import fastapi, uvicorn, pydantic; from voxcpm import VoxCPM; print('
 
 ### ローカルHTTPサーバーの確立
 
-Toolsディレクトリ内にある ```build_server.bat``` をダブルクリックします。
+Toolsディレクトリ内にある ```build_server.bat``` をダブルクリックします。  
 
 ## Unity実行
 
 ### 実行
 
-UnityHubを開きます。Projects内のAddより、```Add project from disk``` を選択します。
+UnityHubを開きます。Projects内のAddより、```Add project from disk``` を選択します。  
+git cloneしてきたUnityプロジェクトを選択してOpenします。
 
-Unityプロジェクトを開いたのち、画面上部の「再生ボタン」をクリックします。
-
-初回実行時は、TMP。これはUIのテキストに使用されるものなので、```a```しておきます。```b```は不要です。
+Unityプロジェクトを開いたのち、Projectビュー内、Assets/ScenesからVoiceDesignシーンをダブルクリックします。  
+その後、画面上部の「再生ボタン」をクリックします。
 
 ### HTTP APIの動作確認
 
@@ -112,7 +121,7 @@ UnityのConsoleビューにエラーが出ておらず、
 
 > [VoxCPM2] Service OK / model: not_loaded / device: auto
 
-のように出力されていればOKです。
+のように出力されていればOKです。  
 また、コマンドプロンプト上に、```"GET /health HTTP/1.1" 200 OK```と表示されていることを確認します。
 
 ### プロンプト作成
@@ -133,13 +142,18 @@ UnityのConsoleビューにエラーが出ておらず、
 | Naturalness | 声の自然さ |
 
 > [!NOTE]
-> 現段階では、上記の設定可能項目によるプロンプト生成を削除できません。ToDoです。
+> スライダーを操作して値を0にすると、当該項目によるプロンプトを削除できます。
 
 また、プロンプトに任意の指示を付け加えたい場合、```Additional English Instruction``` に記載します。
 
+> [!TIP]
+> 全てのスライダーの値を0にすると、完全に任意のプロンプトを用いたボイス生成を指示することができます。  
+
 ### ボイス生成
 
-Test speechに任意の文章を入れます。UIが適当なので文章を入れにくいです。ある程度長い文章の方がうまくいく気がします。  
+Test speechに任意の文章を入れます。~~UIが適当なので文章を入れにくいです~~。  
+ある程度長い文章（目安は２行）の方がうまくいく気がします。  
+
 その後、画面下部の ```Generate Voice``` をクリックします。
 
 > [!NOTE]
@@ -151,7 +165,7 @@ Test speechに任意の文章を入れます。UIが適当なので文章を入�
 |:-:|:-:|
 | CFG | 声の指示や参照音声へ、どれくらい強く従わせるかを決める値です。 <br> 値が大きいほどプロンプトに強く従うようになりますが、不自然さの原因になります。<br> 公式UI上の範囲が1.0～3.0、標準値が2.0です。|
 | Steps | ステップ数 |
-| Seed | 乱数のシード値 |
+| Seed | 乱数のシード値（シード値によって出力は大きく変化します。いろいろ試すと良いです。） |
 | Candidates | 出力する音声候補数（1-3） |
 
 > [!TIP]
@@ -162,6 +176,12 @@ Test speechに任意の文章を入れます。UIが適当なので文章を入�
 
 画面下部に現れる ```Play``` ボタンを押すことで音声を再生することができます。  
 生成したボイスは、```Tools\VoxCPMService\output``` に保存されています。
+
+### 参考プロンプト
+
+```txt:ex1
+A Japanese young adult woman speaking in a relaxed everyday conversation. Her voice stays in a comfortable, naturally light register. Her vocal tone is light, clear and warm, with a gentle smile and soft, rounded vocal resonance. The voice remains clean and focused without excessive breathiness. She sounds naturally charming and friendly, with relaxed but attentive energy. She uses subtle, varied intonation and small spontaneous changes in rhythm. She speaks at a natural conversational pace. The performance is realistic, human and conversational, without forced pitch, exaggerated acting, squeaking or cartoon-like delivery.
+```
 
 ## システムの持つ機能（構想）
 
