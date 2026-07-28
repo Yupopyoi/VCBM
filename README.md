@@ -35,9 +35,9 @@ UnityからHTTP APIを通じて音声生成の要求や生成結果の取得を�
 | 実装RAM | 32.0 GB |
 | グラフィックスボード | NVIDIA GeForce RTX 4070 (12 GB) |
 
-## 環境構築
+## 環境構築（VocCPM）
 
-## 本Unityプロジェクトのクローン
+### 本Unityプロジェクトのクローン
 
 任意のディレクトリで作業を行います。
 
@@ -59,7 +59,7 @@ cd VCBM/Tools
 git clone https://github.com/OpenBMB/VoxCPM.git VoxCPM
 ```
 
-### python仮想環境を作成する
+### VocCPM用python仮想環境を作成する
 
 ```bash:venv
 cd .\VoxCPM
@@ -101,9 +101,9 @@ python -c "import fastapi, uvicorn, pydantic; from voxcpm import VoxCPM; print('
 
 ### ローカルHTTPサーバーの確立
 
-Toolsディレクトリ内にある ```build_server.bat``` をダブルクリックします。  
+Toolsディレクトリ内にある ```build_server.bat``` をダブルクリックします。
 
-## Unity実行
+## Unity実行（VocCPM）
 
 ### 実行
 
@@ -181,6 +181,72 @@ Test speechに任意の文章を入れます。~~UIが適当なので文章を�
 
 ```txt:ex1
 A Japanese young adult woman speaking in a relaxed everyday conversation. Her voice stays in a comfortable, naturally light register. Her vocal tone is light, clear and warm, with a gentle smile and soft, rounded vocal resonance. The voice remains clean and focused without excessive breathiness. She sounds naturally charming and friendly, with relaxed but attentive energy. She uses subtle, varied intonation and small spontaneous changes in rhythm. She speaks at a natural conversational pace. The performance is realistic, human and conversational, without forced pitch, exaggerated acting, squeaking or cartoon-like delivery.
+```
+
+## 環境構築（MeanVC）
+
+### [MeanVC](https://github.com/ASLP-lab/MeanVC)のクローン
+
+**Toolsディレクトリ内（VCBM\Tools\）** で作業を行います。
+
+> [!NOTE]
+> Toolsディレクトリでgit cloneした場合、MeanVCのリポジトリがgitignoreされます。
+
+下記のコマンドを実行し、VocCPMのリポジトリをクローンします。
+また、必要なファイルを、MeanVC内にコピーします。
+
+```bash:git clone
+cd VCBM/Tools
+git clone https://github.com/ASLP-lab/MeanVC.git
+cp export_meanvc_target_features.py ./MeanVC/export_meanvc_target_features.py
+```
+
+### MeanVC用python仮想環境を作成する
+
+```bash:venv
+cd MeanVC
+py --version
+```
+
+```Python 3.11.x```のように、**3.11**（に近い）バージョン表示がされればOKです。
+
+仮想環境を作成します。3.11の部分はインストールされているpythonバージョン名を記入してください。
+その後、仮想環境を有効化します。
+
+```bash:venv
+py -3.12 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+```
+
+(.venv)が表示されたら、必要なPythonツールを更新します。  
+
+```bash:install
+python -m pip install --upgrade pip setuptools wheel
+python -m pip install -r requirements.txt 
+```
+
+CUDA版PyTorchを入れます。使用したいGPUにあったものを使用します。
+
+```bash:cuda
+python -m pip install `
+  torch==2.5.1 `
+  torchvision==0.20.1 `
+  torchaudio==2.5.1 `
+  --index-url https://download.pytorch.org/whl/cu124
+```
+
+必要なツール・ライブラリがそろっていることを確認します。
+
+```bash:check
+python -m pip check
+python -c "import torch; print(torch.__version__); print(torch.version.cuda); print(torch.cuda.is_available()); print(torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'CPU')" 
+```
+
+```bash:cuda
+python .\export_meanvc_target_features.py `
+  --wav "E:\VCBM\VoiceProfiles\NaturalCute01\target.wav" `
+  --out-dir "E:\VCBM\VoiceProfiles\NaturalCute01" `
+  --device cuda
 ```
 
 ## システムの持つ機能（構想）
