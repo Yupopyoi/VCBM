@@ -34,7 +34,7 @@ UnityからHTTP APIを通じて音声生成の要求や生成結果の取得を�
 | CPU | 13th Gen Intel(R) Core(TM) i7-13700F (2.10 GHz) |
 | 実装RAM | 32.0 GB |
 | グラフィックスボード | NVIDIA GeForce RTX 4070 (12 GB) |
-| CUDA | 13.3 |
+| CUDA | 12.4 |
 
 ## 環境構築
 
@@ -102,19 +102,17 @@ python -c "import fastapi, uvicorn, pydantic; from voxcpm import VoxCPM; print('
 
 ### CUDA版PyTorchをインストール（オプション）
 
-$Py = ".\.venv\Scripts\python.exe"
-& $Py -m pip uninstall -y torch torchvision torchaudio
+**TVoxCPMディレクトリ内（VCBM\Tools\VoxCPM）** で作業を続けます。
 
 
-使用しているCUDAのバージョンに適合したPyTorchをインストールしてください。
-
-```bash:cuda_pytorch
+```bash:install_pytorch
 $Py = ".\.venv\Scripts\python.exe"
 
-& $Py -m pip install --no-cache-dir `
-  torch==2.13.0 `
-  torchvision==0.28.0 `
-  --index-url https://download.pytorch.org/whl/cu132
+& $Py -m pip install --no-cache-dir`
+  torch==2.5.1 `
+  torchvision==0.20.1 `
+  torchaudio==2.5.1 `
+  --index-url https://download.pytorch.org/whl/cu124
 
 & $Py -c "import torch; print('torch:', torch.__version__); print('built CUDA:', torch.version.cuda); print('available:', torch.cuda.is_available()); print('GPU:', torch.cuda.get_device_name(0) if torch.cuda.is_available() else 'None')"
 ```

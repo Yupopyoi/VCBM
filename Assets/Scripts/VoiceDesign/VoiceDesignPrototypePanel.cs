@@ -22,8 +22,8 @@ namespace VCBM.VoiceDesign
 
         [SerializeField, Range(1f, 3f)] private float cfgValue = 1.5f;
         [SerializeField, Range(4, 30)] private int inferenceTimesteps = 20;
-        [SerializeField] private int seed = 1234;
-        [SerializeField, Range(1, 3)] private int candidateCount = 1;
+        [SerializeField] private int seed = 42;
+        [SerializeField, Range(1, 10)] private int candidateCount = 1;
         [SerializeField] private bool normalizeText = true;
 
         private VoiceDesignController controller;

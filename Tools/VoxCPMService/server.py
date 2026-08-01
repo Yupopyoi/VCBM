@@ -54,6 +54,21 @@ def set_seed(seed: int) -> None:
 
     if torch.cuda.is_available():
         torch.cuda.manual_seed_all(seed)
+        
+        
+def get_module_devices(module: object) -> list[str]:
+    if not isinstance(module, torch.nn.Module):
+        return []
+
+    devices: set[str] = set()
+
+    for parameter in module.parameters():
+        devices.add(str(parameter.device))
+
+    for buffer in module.buffers():
+        devices.add(str(buffer.device))
+
+    return sorted(devices)
 
 
 def get_model() -> VoxCPM:
@@ -80,6 +95,8 @@ def get_model() -> VoxCPM:
             )
             _model_state = "ready"
             print("VoxCPM2 model ready.")
+            print(f"Configured device: {DEVICE}")
+            print(f"Actual model devices: {get_module_devices(_model.tts_model)}")
             return _model
         except Exception as exception:
             _model_state = "error"
