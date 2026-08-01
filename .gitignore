@@ -168,3 +168,9 @@ coverage.xml
 
 # --- External repositories and AI models ---
 /Tools/VoxCPM/
+
+# --- wav folder ---
+
+/Tools/VoxCPMService/output
+/Tools/VoxCPMService/references
+/Tools/VoxCPMService/clone

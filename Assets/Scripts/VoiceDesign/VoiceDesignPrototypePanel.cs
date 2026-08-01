@@ -167,10 +167,10 @@ namespace VCBM.VoiceDesign
                 int.MaxValue);
 
             candidateCount = DrawIntField(
-                "Candidates (1 - 3)",
+                "Candidates (1 - 10)",
                 candidateCount,
                 1,
-                3);
+                10);
 
             normalizeText = GUILayout.Toggle(
                 normalizeText,

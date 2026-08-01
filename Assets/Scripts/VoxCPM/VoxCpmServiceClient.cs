@@ -71,7 +71,7 @@ namespace VCBM.VoxCPM
                 cfg_value = Mathf.Clamp(cfgValue, 1f, 3f),
                 inference_timesteps = Mathf.Clamp(inferenceTimesteps, 4, 30),
                 seed = seed,
-                candidate_count = Mathf.Clamp(candidateCount, 1, 3),
+                candidate_count = Mathf.Clamp(candidateCount, 1, 10),
                 normalize = normalize
             };
 

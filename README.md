@@ -80,7 +80,7 @@ py -3.12 -m venv .venv
 (.venv)が表示されたら、必要なPythonツールを更新します。
 
 ```bash:install
-python -m pip install --upgrade pip setuptools wheel `
+python -m pip install --upgrade pip setuptools wheel python-multipart `
   "fastapi>=0.115,<1" `
   "uvicorn>=0.30,<1" `
   "pydantic>=2.8,<3"

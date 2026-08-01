@@ -53,7 +53,7 @@ namespace VCBM.VoiceDesign
 
             if (value >= 0.90f)
             {
-                return "A youthful Japanese girl speaking casually in a relaxed everyday conversation. Her voice is squeaky cartoon-character voice";
+                return "A youthful Japanese girl speaking casually. Her voice is squeaky cartoon-character voice";
             }
 
             if (value >= 0.80f)
