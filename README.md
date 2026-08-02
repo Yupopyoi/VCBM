@@ -38,7 +38,9 @@ UnityからHTTP APIを通じて音声生成の要求や生成結果の取得を�
 
 ## 環境構築
 
-## 本Unityプロジェクトのクローン
+## Unityプロジェクト
+
+### 本Unityプロジェクトのクローン
 
 任意のディレクトリで作業を行います。
 
@@ -46,7 +48,9 @@ UnityからHTTP APIを通じて音声生成の要求や生成結果の取得を�
 git clone https://github.com/Yupopyoi/VCBM.git
 ```
 
-### [VoxCPM](https://github.com/OpenBMB/VoxCPM/)のクローン
+## [VoxCPM](https://github.com/OpenBMB/VoxCPM/)
+
+### VoxCPMのクローン
 
 **Toolsディレクトリ内（VCBM\Tools\）** で作業を行います。
 
@@ -103,7 +107,6 @@ python -c "import fastapi, uvicorn, pydantic; from voxcpm import VoxCPM; print('
 ### CUDA版PyTorchをインストール（オプション）
 
 **TVoxCPMディレクトリ内（VCBM\Tools\VoxCPM）** で作業を続けます。
-
 
 ```bash:install_pytorch
 $Py = ".\.venv\Scripts\python.exe"
@@ -201,6 +204,133 @@ Test speechに任意の文章を入れます。~~UIが適当なので文章を�
 A Japanese young adult woman speaking in a relaxed everyday conversation. Her voice stays in a comfortable, naturally light register. Her vocal tone is light, clear and warm, with a gentle smile and soft, rounded vocal resonance. The voice remains clean and focused without excessive breathiness. She sounds naturally charming and friendly, with relaxed but attentive energy. She uses subtle, varied intonation and small spontaneous changes in rhythm. She speaks at a natural conversational pace. The performance is realistic, human and conversational, without forced pitch, exaggerated acting, squeaking or cartoon-like delivery.
 ```
 
+## [RVC](https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI/blob/main/docs/jp/README.ja.md)
+
+Unityとは未連携です。
+
+### RVCのクローン
+
+**Toolsディレクトリ内（VCBM\Tools\）** で作業を行います。
+
+> [!NOTE]
+> Toolsディレクトリでgit cloneした場合、RVCのリポジトリがgitignoreされます。
+
+下記のコマンドを実行し、RVCのリポジトリをクローンします。
+
+```bash:git clone
+cd VCBM/Tools
+git clone https://github.com/RVC-Project/Retrieval-based-Voice-Conversion-WebUI.git
+```
+
+---
+
+### RVC用のpython仮想環境を作成する
+
+```bash:venv
+cd Retrieval-based-Voice-Conversion-WebUI
+py -3.12 -m venv .venv
+.\.venv\Scripts\activate
+python -m pip install --upgrade pip setuptools wheel
+```
+
+NVIDIA **RTX50系**のGPUを使用している場合は次のコマンドを実行してください。
+
+```bash:get_requirements
+python -m pip install torch==2.7.1+cu128 torchaudio==2.7.1+cu128 `
+  --index-url https://download.pytorch.org/whl/cu128 `
+  --extra-index-url https://pypi.org/simple
+python -m pip install -r requirments_cu128_py312.txt
+python -c "import torch; print('torch:', torch.__version__); print('cuda:', torch.version.cuda); print('cuda available:', torch.cuda.is_available())"
+```
+
+NVIDIA **RTX50系以前**のGPUを使用している場合は次のコマンドを実行してください。
+
+```bash:get_requirements
+python -m pip install torch==2.7.1+cu118 torchaudio==2.7.1+cu118 `
+  --index-url https://download.pytorch.org/whl/cu118 `
+  --extra-index-url https://pypi.org/simple
+python -m pip install -r requirments_cu118_py312.txt
+python -m pip install --no-cache-dir --force-reinstall "numpy==1.26.4" "faiss-cpu>=1.13.0,<2"
+python -c "import torch; print('torch:', torch.__version__); print('cuda:', torch.version.cuda); print('cuda available:', torch.cuda.is_available())"
+```
+
+---
+
+### モデルのダウンロード
+
+```bash:download_model
+python -m pip install --upgrade huggingface_hub
+
+# Required for inference and feature extraction
+hf download lj1995/VoiceConversionWebUI --revision main `
+  --include "hubert_base/*" --local-dir assets
+hf download lj1995/VoiceConversionWebUI rmvpe.pt --revision main `
+  --local-dir assets/rmvpe
+
+# Required for v1/v2 training
+hf download lj1995/VoiceConversionWebUI --revision main `
+  --include "pretrained/*" "pretrained_v2/*" --local-dir assets
+hf download lj1995/VoiceConversionWebUI mute.zip --revision main `
+  --local-dir .model-downloads
+python -m zipfile -e .model-downloads/mute.zip logs
+
+# Required only for pymss/MSST vocal separation
+hf download lj1995/VoiceConversionWebUI --revision main `
+  --include "pymss_weights/*" --local-dir assets
+
+python -m pip install --force-reinstall "huggingface-hub>=0.26.0,<1.0"
+```
+
+---
+
+### webui.pyの実行
+
+```bash:exec_webui
+$env:PYTHONSAFEPATH = "1"
+$env:PYTHONPATH = (Get-Location).Path
+$env:PYTHONNOUSERSITE = "1"
+
+.\.venv\Scripts\python.exe webui.py
+```
+
+---
+
+### webuiによるトレーニング
+
+- [ローカルホスト（ポート番号7865）](http://localhost:7865/) にアクセスする
+- 上部のタブから「トレーニング」を選択
+- ステップ１
+  - 「モデル名」に任意の名前を入れる
+  - 目標サンプリングレートは40kとする（48kでも良いが、この先は40kであることを前提として進める）
+  - 「音高ガイド」はtrueにする
+  - 「CPUスレッド数」は既定（16）
+  - 「トレーニング用フォルダのパス」には、wavファイルが保存されているフォルダのパスを指定する
+  - 「話者ID」は既定（0）
+  - 「データ処理」をクリックする
+- ステップ２
+  - 「特徴抽出」をクリックする
+- ステップ３
+  - 各トレーニング設定を変更する（変更しなくてもOK）
+  - 事前学習済みのモデルを入手する
+    - [HuggingFace](https://huggingface.co/lj1995/VoiceConversionWebUI/tree/main/pretrained_v2)より、f0D40kとf0G40kをダウンロードする
+    - ダウンロードしたモデルを、```Retrieval-based-Voice-Conversion-WebUI\assets\pretrained_v2```に入れる
+  - UIにおける「事前学習済みのG/Dモデルのパス」に、```assets/pretrained_v2/f0G40k.pth```、```assets/pretrained_v2/f0D40k.pth```と記載する
+  - 「モデルのトレーニング」をクリックする。
+  - ```Retrieval-based-Voice-Conversion-WebUI\assets\weights```に、学習済もモデルが保存されていることを確認する
+
+---
+
+### webuiによる音声変換
+
+- [ローカルホスト（ポート番号7865）](http://localhost:7865/) にアクセスする
+- 上部のタブから「モデル推論」を選択
+- 「音源推論」から、先ほど作成したpthファイルを選択する
+- 「話者ID」は既定（0）
+- １つのwavファイルだけ変換する場合は「単発推論」を、任意のフォルダ内の全てのwavファイルを変換する場合は「一括推論」を選択する
+- ピッチ変更は、男声→女声の場合、+6前後が目安
+- その他の項目は任意に選択し、「変換」をクリックする
+
+
 ## システムの持つ機能（構想）
 
 本システムは、次の二つの機能を有する。
@@ -213,20 +343,8 @@ A Japanese young adult woman speaking in a relaxed everyday conversation. Her vo
 
 2. **リアルタイム音声変換**
    - 選択した目標音声から目標話者特徴を抽出する。
-   - MeanVCがマイク入力を目標声へ変換する。
+   - RVCがマイク入力を目標声へ変換する。
    - 発話内容、発話タイミング、語尾、抑揚を可能な範囲で保持する。
-
-```mermaid
-flowchart LR
-    A[Unityで声を設定] --> B[英文プロンプト生成]
-    B --> C[VoxCPM2]
-    C --> D[候補音声WAV]
-    D --> E{ユーザーが選択}
-    E --> F[Voice Profile]
-    G[マイク入力] --> H[MeanVC]
-    F --> H
-    H --> I[変換音声出力]
-```
 
 ## 機能関連図（構想）
 
@@ -252,7 +370,7 @@ flowchart TB
 
     subgraph Conversion["リアルタイム変換系"]
         MIC[音声入力]
-        MVC[MeanVC]
+        MVC[RVC]
         OUT[音声出力]
     end
 
@@ -289,43 +407,4 @@ sequenceDiagram
     VoxCPM2->>Storage: 候補WAV保存
     VoxCPM2-->>Unity: 候補一覧
     Unity-->>User: 候補を表示・再生
-```
-
-### 目標声決定
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Unity
-    participant ProfileService
-    participant MeanVC
-
-    User->>Unity: この声を使用
-    Unity->>ProfileService: 候補音声を登録
-    ProfileService->>ProfileService: Voice Profile作成
-    ProfileService-->>Unity: 登録完了
-    Unity->>MeanVC: Voice Profile読込み
-    MeanVC-->>Unity: 準備完了
-```
-
-### リアルタイム変換
-
-```mermaid
-sequenceDiagram
-    actor User
-    participant Unity
-    participant MeanVC
-    participant Microphone
-    participant Speaker
-
-    User->>Unity: 変換開始
-    Unity->>MeanVC: Start
-    loop 音声チャンク
-        Microphone->>MeanVC: 入力音声
-        MeanVC->>MeanVC: 内容特徴抽出
-        MeanVC->>MeanVC: 目標声へ変換
-        MeanVC->>Speaker: 変換音声
-    end
-    User->>Unity: 変換停止
-    Unity->>MeanVC: Stop
 ```

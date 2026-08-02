@@ -168,6 +168,7 @@ coverage.xml
 
 # --- External repositories and AI models ---
 /Tools/VoxCPM/
+/Tools/Retrieval-based-Voice-Conversion*
 
 # --- wav folder ---
 
