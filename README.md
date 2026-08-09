@@ -330,6 +330,21 @@ $env:PYTHONNOUSERSITE = "1"
 - ピッチ変更は、男声→女声の場合、+6前後が目安
 - その他の項目は任意に選択し、「変換」をクリックする
 
+---
+
+## Unity Sentis環境構築
+
+Unityで次を開きます。
+
+```bash:install_sentis
+上部Windowタブ
+  → Package Manager
+  → Package Management
+  → 左上の「＋」
+  → Install package by technical name
+  → com.unity.ai.inference と入力して、Install
+```
+
 
 ## システムの持つ機能（構想）
 

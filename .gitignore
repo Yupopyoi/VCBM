@@ -175,3 +175,6 @@ coverage.xml
 /Tools/VoxCPMService/output
 /Tools/VoxCPMService/references
 /Tools/VoxCPMService/clone
+
+# --- ML Models ---
+*.onnx*

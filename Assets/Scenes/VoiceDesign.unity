@@ -706,6 +706,181 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::VCBM.VoiceClone.VoiceCloneServiceClient
   serverUrl: http://127.0.0.1:8765
+--- !u!1 &1187968029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1187968030}
+  - component: {fileID: 1187968033}
+  - component: {fileID: 1187968034}
+  m_Layer: 0
+  m_Name: SentisTest_wav
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1187968030
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187968029}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: -0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!82 &1187968033
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187968029}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+--- !u!114 &1187968034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1187968029}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1fcf3655997173a4fa9c2c176e0d9b27, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::RvcSentisWavConverter
+  inputClip: {fileID: 8300000, guid: 6b4c2f5ee876b604ca904d0901ae4be2, type: 3}
+  contentVecModelAsset: {fileID: 5022602860645237092, guid: c3e18dd7c6d1949408797c13662de80f, type: 3}
+  rmvpeModelAsset: {fileID: 5022602860645237092, guid: 7e42ba2fec16dc747a0f53db15fd1ce6, type: 3}
+  retrievalIndexAsset: {fileID: 0}
+  rvcModelAsset: {fileID: 5022602860645237092, guid: e837988ab0c008d429e5b2dd508fa7e0, type: 3}
+  contentInputName: audio
+  contentOutputName: features
+  contentOutputLayout: 0
+  rmvpeInputName: mel
+  rmvpeOutputName: hidden
+  phoneInputName: phone
+  phoneLengthsInputName: phone_lengths
+  pitchInputName: pitch
+  pitchfInputName: pitchf
+  speakerInputName: sid
+  noiseInputName: rnd
+  audioOutputName: audio
+  speakerId: 0
+  outputSampleRate: 40000
+  transposeSemitones: 6
+  framesPerChunk: 200
+  chunkOverlapSeconds: 0.5
+  indexRate: 0.75
+  protect: 0.283
+  retrievalQueriesPerFrame: 8
+  f0MinHz: 50
+  f0MaxHz: 1100
+  rmvpeVoicedThreshold: 0.03
+  backend: 256
+  layersPerFrame: 30
+  outputFileName: rvc_converted.wav
+  normalizeOutput: 1
+  playWhenFinished: 1
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
@@ -714,3 +889,4 @@ SceneRoots:
   - {fileID: 342090879}
   - {fileID: 406688107}
   - {fileID: 634447118}
+  - {fileID: 1187968030}
